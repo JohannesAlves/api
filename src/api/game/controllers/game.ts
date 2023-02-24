@@ -11,7 +11,13 @@ export default factories.createCoreController(
       try {
         console.log("Initialize Populating...");
 
-        await strapi.service("api::game.game").populate();
+        const options = {
+          sort: "popularity",
+          page: "1",
+          ...ctx.query,
+        };
+
+        await strapi.service("api::game.game").populate(options);
 
         ctx.send({ message: "Finished populating" });
       } catch (error) {
